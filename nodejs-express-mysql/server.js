@@ -1,30 +1,35 @@
 const express = require("express");
-// const bodyParser = require("body-parser"); /* deprecated */
 const cors = require("cors");
 
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081"
-};
+/*
+  CORS Configuration
+  Allow requests from anywhere (for testing / ALB / S3 / Nginx)
+*/
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: false
+}));
 
-app.use(cors(corsOptions));
+// Parse requests of content-type - application/json
+app.use(express.json());
 
-// parse requests of content-type - application/json
-app.use(express.json()); /* bodyParser.json() is deprecated */
+// Parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true })); /* bodyParser.urlencoded() is deprecated */
-
-// simple route
+// Simple test route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to bezkoder application." });
 });
 
+// Routes
 require("./app/routes/tutorial.routes.js")(app);
 
-// set port, listen for requests
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
+// Set port and listen for requests
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}.`);
 });
