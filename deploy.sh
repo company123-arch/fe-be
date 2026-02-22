@@ -24,7 +24,7 @@ npm run build >> $LOGFILE 2>&1
 
 echo "Deploying frontend to Nginx..." >> $LOGFILE
 sudo rm -rf /var/www/html/*
-sudo cp -r build/* /var/www/html/
+sudo cp -r dist/* /var/www/html/
 
 echo "Deployment completed at $(date)" >> $LOGFILE
 echo "=========================" >> $LOGFILE
