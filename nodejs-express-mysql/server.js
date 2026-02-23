@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Simple test route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+  res.json({ message: "Welcome to backend application." });
 });
 
 // Routes
@@ -31,5 +31,5 @@ require("./app/routes/tutorial.routes.js")(app);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Backend Deployment Test`);
+  console.log(`Deployment Test`);
 });
