@@ -1,0 +1,25 @@
+name: Backend Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            cd /home/ubuntu/fe-be
+            git pull origin main
+            cd nodejs-express-mysql
+            npm install
+            pm2 restart fe-be-backend
+            pm2 save
